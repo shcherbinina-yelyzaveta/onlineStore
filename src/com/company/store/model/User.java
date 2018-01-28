@@ -1,6 +1,7 @@
 package com.company.store.model;
 
 import com.company.store.database.UserDAO;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class User {
@@ -12,18 +13,18 @@ public class User {
     public static UserDAO userDAO = new UserDAO();
 
     public User(String login, String email, String password) {
-        this.login.set(login);
-        this.email.set(email);
-        this.password.set(password);
+        this.login = new SimpleStringProperty(login);
+        this.email = new SimpleStringProperty(email);
+        this.password = new SimpleStringProperty(password);
         this.cart = new Cart();
-        this.id = userDAO.create(this);
+//        this.id = userDAO.create(this);
     }
 
     public User(int id, String login, String email, String password, Cart cart) {
         this.id = id;
-        this.login.set(login);
-        this.email.set(email);
-        this.password.set(password);
+        this.login = new SimpleStringProperty(login);
+        this.email = new SimpleStringProperty(email);
+        this.password = new SimpleStringProperty(password);
         this.cart = cart;
     }
 

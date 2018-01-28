@@ -1,6 +1,7 @@
 package com.company.store.model;
 
 import com.company.store.database.CategoryDAO;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class Category {
@@ -13,8 +14,8 @@ public class Category {
     }
 
     public Category(String categoryName) {
-        this.categoryName.set(categoryName);
-        this.id = categoryDAO.create(this);
+        this.categoryName = new SimpleStringProperty(categoryName);
+//        this.id = categoryDAO.create(this);
     }
 
     public Category(int id, String categoryName) {
