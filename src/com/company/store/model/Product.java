@@ -20,7 +20,7 @@ public class Product {
         this.category = new Category();
         this.price = new SimpleDoubleProperty(price);
         this.description = new SimpleStringProperty("");
-//        this.id = productDAO.create(this);
+        this.id = productDAO.create(this);
     }
 
     public Product(int id, String productName, Category category, Double price, String description) {

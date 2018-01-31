@@ -13,7 +13,8 @@ public class Cart {
     public static CartDAO cartDAO = new CartDAO();
 
     public Cart() {
-        this.price.setValue(0);
+        this.id = cartDAO.create(this);
+        this.price = new SimpleDoubleProperty(0);
     }
 
     public Cart(int id) {
@@ -25,10 +26,10 @@ public class Cart {
         this.price = cart.priceProperty();
         this.products = cart.getProducts();
     }
-    public Cart(int id, List<Product> products, DoubleProperty price) {
+    public Cart(int id, List<Product> products, Double price) {
         this.id = id;
         this.products = products;
-        this.price = price;
+        this.price = new SimpleDoubleProperty(price);
     }
 
     public int getId() {

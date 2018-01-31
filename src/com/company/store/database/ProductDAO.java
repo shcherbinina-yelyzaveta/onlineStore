@@ -46,7 +46,7 @@ public class ProductDAO extends AbstractDAO<Integer, Product> {
              PreparedStatement statement = connection.prepareStatement(SQL_SELECT_PRODUCT_ON_ID)) {
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
-            while (rs.next()) {
+            if (rs.next()) {
                 String name = rs.getString("name");
                 Double price = rs.getDouble("price");
                 String description = rs.getString("description");
@@ -108,7 +108,6 @@ public class ProductDAO extends AbstractDAO<Integer, Product> {
                 statement.setInt(2, Category.categoryDAO.findIdByEntity(entity.getCategory()));
                 statement.setDouble(3, entity.getPrice());
                 statement.setString(4, entity.getDescription());
-                //todo: change parameterIndex
                 statement.execute();
                 id = findIdByEntity(entity);
             }

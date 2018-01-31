@@ -14,6 +14,7 @@ public class UserDAO extends AbstractDAO<Integer, User> {
     private static final String SQL_DELETE_USER_ON_ID = "DELETE FROM user WHERE id = ?";
     private static final String SQL_INSERT_INTO_USER = "INSERT INTO user VALUES (?, ?, ?, ?)";
     private static final String SQL_UPDATE = "UPDATE user set password = ? WHERE id = ?";
+    private static final String SQL_SELECT_ID = "SELECT id FROM user WHERE login = ? AND password = ?";
 
     @Override
     public List<User> findAll() {
@@ -100,10 +101,10 @@ public class UserDAO extends AbstractDAO<Integer, User> {
              PreparedStatement statement = connection.prepareStatement(SQL_INSERT_INTO_USER)) {
             id = findIdByEntity(entity);
             if (id == null) {
-                statement.setString(1, entity.getLogin());
-                statement.setString(2, entity.getEmail());
-                statement.setString(3, entity.getPassword());
-                //todo: add field cart_id
+                statement.setString(1, entity.getEmail());
+                statement.setInt(2, entity.getCart().getId());
+                statement.setString(3, entity.getLogin());
+                statement.setString(4, entity.getPassword());
                 statement.execute();
                 id = findIdByEntity(entity);
             }
@@ -129,5 +130,23 @@ public class UserDAO extends AbstractDAO<Integer, User> {
             e.printStackTrace();
         }
         return result;
+    }
+
+    public Integer authentication(String login, String password){
+        Integer id = null;
+        try (Connection connection = ConnectorDB.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_SELECT_ID)) {
+            statement.setString(1, login);
+            statement.setString(2, password);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                id = rs.getInt("id");
+            }
+        } catch (SQLException e) {
+            System.err.println("SQL Exception (request or table failed):" + e);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return id;
     }
 }

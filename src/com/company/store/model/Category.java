@@ -15,12 +15,12 @@ public class Category {
 
     public Category(String categoryName) {
         this.categoryName = new SimpleStringProperty(categoryName);
-//        this.id = categoryDAO.create(this);
+        this.id = categoryDAO.create(this);
     }
 
     public Category(int id, String categoryName) {
         this.id = id;
-        this.categoryName.set(categoryName);
+        this.categoryName = new SimpleStringProperty(categoryName);
     }
 
     public Category(int id) {

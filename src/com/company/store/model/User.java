@@ -17,7 +17,7 @@ public class User {
         this.email = new SimpleStringProperty(email);
         this.password = new SimpleStringProperty(password);
         this.cart = new Cart();
-//        this.id = userDAO.create(this);
+        this.id = userDAO.create(this);
     }
 
     public User(int id, String login, String email, String password, Cart cart) {
