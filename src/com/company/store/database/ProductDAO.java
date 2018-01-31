@@ -13,7 +13,8 @@ public class ProductDAO extends AbstractDAO<Integer, Product> {
     private static final String SQL_SELECT_ID_ON_PRODUCT = "SELECT id FROM product WHERE name = ? AND price = ? AND " +
             "description = ? AND catalog_id = ?";
     private static final String SQL_DELETE_PRODUCT_ON_ID = "DELETE FROM product WHERE id = ?";
-    private static final String SQL_INSERT_INTO_PRODUCT = "INSERT INTO product VALUES (?, ?, ?, ?)";
+    private static final String SQL_INSERT_INTO_PRODUCT = "INSERT INTO product(name, catalog_id, price, description)" +
+            " VALUES (?, ?, ?, ?)";
     private static final String SQL_UPDATE = "UPDATE product set name = ? , price = ? , description = ? , " +
             "catalog_id = ? WHERE id = ?";
 

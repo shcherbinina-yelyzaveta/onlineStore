@@ -37,9 +37,9 @@ public class AuthenticationController {
     }
 
     @FXML
-    private void handleLogIn(){
+    private void handleLogIn() {
         Integer id = User.userDAO.authentication(login.getText(), password.getText());
-        if(id!=null){
+        if (id != null) {
             user = User.userDAO.findEntityById(id);
             mainApp.showProductOverview();
         } else {
@@ -48,26 +48,36 @@ public class AuthenticationController {
     }
 
     @FXML
-    private void handleSignUp(){
-      if(isCorrect()){
-          user = new User(loginNew.getText(), email.getText(), passwordNew.getText());
-          mainApp.showAuthentication();
-      }
+    private void handleSignUp() {
+        if (isCorrect()) {
+            user = new User(loginNew.getText(), email.getText(), passwordNew.getText());
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.initOwner(mainApp.getPrimaryStage());
+            alert.setTitle("Online Store");
+            alert.setHeaderText(null);
+            alert.setContentText("You are registered!\u2713\u2713\u2713");
+            alert.getDialogPane().setPrefWidth(250);
+            alert.showAndWait();
+            mainApp.showAuthentication();
+        }
     }
 
-    private boolean isCorrect(){
+    private boolean isCorrect() {
         String errorMessage = "";
-        if(!passwordNew.getText().equals(confirmPassword.getText())){
-            errorMessage+="Passwords are not equal!\n";
+        if (User.userDAO.findIdByEntity(loginNew.getText(), email.getText()) != null) {
+            errorMessage += "User with this login or e-mail has already registered!\n";
         }
-        if(loginNew.getText().length()==0 || login.getText().length()>=20){
-            errorMessage+="Login is too short or too long!\n";
+        if (!passwordNew.getText().equals(confirmPassword.getText())) {
+            errorMessage += "Passwords are not equal!\n";
         }
-        if(!email.getText().endsWith("@gmail.com")){
-            errorMessage+="It supports only Google Mail";
+        if (loginNew.getText().length() == 0 || login.getText().length() >= 20) {
+            errorMessage += "Login is too short or too long!\n";
+        }
+        if (!email.getText().endsWith("@gmail.com")) {
+            errorMessage += "It supports only Google Mail";
         }
 
-        if(errorMessage.length()==0){
+        if (errorMessage.length() == 0) {
             return true;
         } else {
             errorView(errorMessage);

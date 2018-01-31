@@ -10,9 +10,9 @@ import java.util.List;
 public class UserDAO extends AbstractDAO<Integer, User> {
     private static final String SQL_SELECT_ALL_USERS = "SELECT * FROM user";
     private static final String SQL_SELECT_USER_ON_ID = "SELECT * FROM user WHERE id = ?";
-    private static final String SQL_SELECT_ID_ON_USER = "SELECT id FROM user WHERE login = ?";
+    private static final String SQL_SELECT_ID_ON_USER = "SELECT id FROM user WHERE login = ? OR email = ?";
     private static final String SQL_DELETE_USER_ON_ID = "DELETE FROM user WHERE id = ?";
-    private static final String SQL_INSERT_INTO_USER = "INSERT INTO user VALUES (?, ?, ?, ?)";
+    private static final String SQL_INSERT_INTO_USER = "INSERT INTO user(email, cart_id, login, password) VALUES (?, ?, ?, ?)";
     private static final String SQL_UPDATE = "UPDATE user set password = ? WHERE id = ?";
     private static final String SQL_SELECT_ID = "SELECT id FROM user WHERE login = ? AND password = ?";
 
@@ -25,7 +25,7 @@ public class UserDAO extends AbstractDAO<Integer, User> {
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String login = rs.getString("login");
-                String email = rs.getString("e-mail");
+                String email = rs.getString("email");
                 String password = rs.getString("password");
                 int cart_id = rs.getInt("cart_id");
                 users.add(new User(id, login, email, password, new Cart(cart_id)));
@@ -47,7 +47,7 @@ public class UserDAO extends AbstractDAO<Integer, User> {
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 String login = rs.getString("login");
-                String email = rs.getString("e-mail");
+                String email = rs.getString("email");
                 String password = rs.getString("password");
                 int cart_id = rs.getInt("cart_id");
                 user = new User(id, login, email, password, new Cart(cart_id));
@@ -62,20 +62,7 @@ public class UserDAO extends AbstractDAO<Integer, User> {
 
     @Override
     public Integer findIdByEntity(User entity) {
-        Integer id = null;
-        try (Connection connection = ConnectorDB.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SQL_SELECT_ID_ON_USER)) {
-            statement.setString(1, entity.getLogin());
-            ResultSet rs = statement.executeQuery();
-            if (rs.next()) {
-                id = rs.getInt("id");
-            }
-        } catch (SQLException e) {
-            System.err.println("SQL Exception (request or table failed):" + e);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return id;
+        return findIdByEntity(entity.getLogin(), entity.getEmail());
     }
 
     @Override
@@ -132,12 +119,30 @@ public class UserDAO extends AbstractDAO<Integer, User> {
         return result;
     }
 
-    public Integer authentication(String login, String password){
+    public Integer authentication(String login, String password) {
         Integer id = null;
         try (Connection connection = ConnectorDB.getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL_SELECT_ID)) {
             statement.setString(1, login);
             statement.setString(2, password);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                id = rs.getInt("id");
+            }
+        } catch (SQLException e) {
+            System.err.println("SQL Exception (request or table failed):" + e);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return id;
+    }
+
+    public Integer findIdByEntity(String login, String email) {
+        Integer id = null;
+        try (Connection connection = ConnectorDB.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_SELECT_ID_ON_USER)) {
+            statement.setString(1, login);
+            statement.setString(2, email);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
                 id = rs.getInt("id");

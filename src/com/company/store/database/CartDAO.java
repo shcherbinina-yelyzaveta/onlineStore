@@ -80,12 +80,11 @@ public class CartDAO extends AbstractDAO<Integer, Cart> {
     public Integer create(Cart entity) {
         Integer id = null;
         try (Connection connection = ConnectorDB.getConnection();
-             Statement statement = connection.createStatement()) {
-            statement.addBatch(SQL_INSERT_INTO_CART);
-            statement.addBatch("SELECT @@IDENTITY");
-            statement.executeBatch();
-            ResultSet rs = statement.getResultSet();
-            while (rs.next()){
+             PreparedStatement statement = connection.prepareStatement(SQL_INSERT_INTO_CART,
+                     Statement.RETURN_GENERATED_KEYS)) {
+            statement.executeUpdate();
+            ResultSet rs = statement.getGeneratedKeys();
+            if (rs.next()) {
                 id = rs.getInt(1);
             }
         } catch (SQLException e) {

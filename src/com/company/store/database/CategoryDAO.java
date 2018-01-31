@@ -11,7 +11,7 @@ public class CategoryDAO extends AbstractDAO<Integer, Category> {
     private static final String SQL_SELECT_CATEGORY_ON_ID = "SELECT * FROM catalog WHERE id = ?";
     private static final String SQL_SELECT_ID_ON_CATEGORY = "SELECT id FROM catalog WHERE name = ?";
     private static final String SQL_DELETE_CATEGORY_ON_ID = "DELETE FROM catalog WHERE id = ?";
-    private static final String SQL_INSERT_INTO_CATEGORY = "INSERT INTO catalog VALUES (?)";
+    private static final String SQL_INSERT_INTO_CATEGORY = "INSERT INTO catalog(name) VALUES (?)";
     private static final String SQL_UPDATE = "UPDATE catalog set name = ? WHERE id = ?";
 
     @Override
