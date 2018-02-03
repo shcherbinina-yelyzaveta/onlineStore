@@ -68,13 +68,15 @@ public class CatalogViewController {
     private void handleBuy(){
         int selectedIndex = productTable.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
-            OrderDAO.create(mainApp.getUser().getCart().getId(), productTable.getItems().get(selectedIndex).getId());
+            OrderDAO.create(mainApp.getUser().getCart(), productTable.getItems().get(selectedIndex).getId());
+            mainApp.getCartProducts().add(productTable.getItems().get(selectedIndex));
+            //todo: добавить табличку с количеством продукта в корзине
             Cart.cartDAO.update(mainApp.getUser().getCart());
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.initOwner(mainApp.getPrimaryStage());
             alert.setTitle("No Selection");
-            alert.setHeaderText("No Product Selected");
+            alert.setHeaderText(null);
             alert.setContentText("Please select a product in the table.");
 
             alert.showAndWait();

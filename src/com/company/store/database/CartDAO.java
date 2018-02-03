@@ -12,8 +12,8 @@ public class CartDAO extends AbstractDAO<Integer, Cart> {
     private static final String SQL_SELECT_CART_ON_ID = "SELECT * FROM cart WHERE id = ?";
     private static final String SQL_DELETE_CART_ON_ID = "DELETE FROM cart WHERE id = ?";
     private static final String SQL_INSERT_INTO_CART = "INSERT INTO cart(price) VALUES (0)";
-    private static final String SQL_UPDATE = "UPDATE cart set price = (" +
-            "SELECT sum(price) FROM product, orders" +
+    private static final String SQL_UPDATE = "UPDATE cart set price = ( " +
+            "SELECT sum(price) FROM product, orders " +
             "WHERE product.id = prod_id AND cart_id = ?) WHERE id = ?";
 
     @Override
@@ -87,6 +87,7 @@ public class CartDAO extends AbstractDAO<Integer, Cart> {
             if (rs.next()) {
                 id = rs.getInt(1);
             }
+            update(entity);
         } catch (SQLException e) {
             System.err.println("SQL Exception (request or table failed):" + e);
         } catch (ClassNotFoundException e) {
@@ -103,8 +104,9 @@ public class CartDAO extends AbstractDAO<Integer, Cart> {
             statement.setInt(1, entity.getId());
             statement.setInt(2, entity.getId());
             result = statement.execute();
+            entity.setPrice(findEntityById(entity.getId()).getPrice());
         } catch (SQLException e) {
-            System.err.println("SQL Exception (request or table failed):" + e);
+            System.err.println("SQL Exception (request or table failed)+:" + e);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }

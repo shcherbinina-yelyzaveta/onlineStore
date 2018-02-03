@@ -11,6 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -22,7 +23,9 @@ public class MainApp extends Application {
     private Stage primaryStage;
     private BorderPane rootLayout;
     private ObservableList<Product> products = FXCollections.observableArrayList();
+    private ObservableList<Product> cartProducts = FXCollections.observableArrayList();
     private User user;
+    private boolean isCart;
 
     public MainApp() {
         setProducts(Product.productDAO.findAll());
@@ -37,6 +40,14 @@ public class MainApp extends Application {
         this.products.addAll(products);
     }
 
+    public ObservableList<Product> getCartProducts() {
+        return cartProducts;
+    }
+
+    public void setCartProducts(List<Product> cartProducts) {
+        this.cartProducts.addAll(cartProducts);
+    }
+
     public User getUser() {
         return user;
     }
@@ -45,15 +56,36 @@ public class MainApp extends Application {
         this.user = user;
     }
 
+    public boolean isCart() {
+        return isCart;
+    }
+
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Online Store");
+        this.primaryStage.getIcons().add(new Image("file:resources/images/icon.png"));
 
-        initRootLayout();
+        initAuthenticationLayout();
         showAuthentication();
     }
 
+    public void initAuthenticationLayout() {
+        try {
+            // Загружаем корневой макет из fxml файла.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("/fxml/AuthenticationLayout.fxml"));
+            rootLayout = loader.load();
+
+            // Отображаем сцену, содержащую корневой макет.
+            Scene scene = new Scene(rootLayout);
+            primaryStage.setScene(scene);
+            primaryStage.setResizable(false);
+            primaryStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     /**
      * Инициализирует корневой макет.
      */
@@ -67,6 +99,7 @@ public class MainApp extends Application {
             // Отображаем сцену, содержащую корневой макет.
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
+            primaryStage.setResizable(true);
             RootLayoutController controller = loader.getController();
             controller.setMainApp(this);
             primaryStage.show();
@@ -83,11 +116,11 @@ public class MainApp extends Application {
             // Загружаем сведения об адресатах.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("/fxml/CatalogView.fxml"));
-            primaryStage.setResizable(true);
             AnchorPane productOverview = loader.load();
 
             // Помещаем сведения об адресатах в центр корневого макета.
             rootLayout.setCenter(productOverview);
+            isCart = false;
             // Даём контроллеру доступ к главному приложению.
             CatalogViewController controller = loader.getController();
             controller.setMainApp(this);
@@ -101,11 +134,11 @@ public class MainApp extends Application {
             // Загружаем сведения об адресатах.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("/fxml/CartView.fxml"));
-            primaryStage.setResizable(true);
             AnchorPane cartOverview = loader.load();
 
             // Помещаем сведения об адресатах в центр корневого макета.
             rootLayout.setCenter(cartOverview);
+            isCart = true;
             // Даём контроллеру доступ к главному приложению.
             CartViewController controller = loader.getController();
             controller.setMainApp(this);
@@ -122,8 +155,6 @@ public class MainApp extends Application {
             // Загружаем окно.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("/fxml/Authentication.fxml"));
-            // Запрет на изменение окна
-            primaryStage.setResizable(false);
             AnchorPane productOverview = loader.load();
 
             // Помещаем окно в центр корневого макета.

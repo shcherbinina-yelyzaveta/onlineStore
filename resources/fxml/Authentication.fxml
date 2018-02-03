@@ -17,9 +17,9 @@
    <children>
       <Pane nodeOrientation="LEFT_TO_RIGHT" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
          <children>
-            <AnchorPane layoutX="0.0" layoutY="0.0" prefHeight="400.0" prefWidth="600.0">
+            <AnchorPane prefHeight="400.0" prefWidth="600.0">
                <children>
-                  <ImageView fitHeight="114.0" fitWidth="148.0" layoutY="10.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="250">
+                  <ImageView fitHeight="117.0" fitWidth="119.0" layoutX="242.0" layoutY="14.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="242.0">
                      <effect>
                         <DropShadow>
                            <input>
@@ -28,45 +28,45 @@
                         </DropShadow>
                      </effect>
                      <image>
-                        <Image url="@../logo.png" />
+                        <Image url="@../images/icon.png" />
                      </image>
                   </ImageView>
+                  <TabPane layoutX="201.0" layoutY="145.0" prefHeight="240.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
+                    <tabs>
+                      <Tab text="Log in">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <PasswordField fx:id="password" layoutX="14.0" layoutY="74.0" />
+                                    <TextField fx:id="login" layoutX="14.0" layoutY="27.0" />
+                                    <Label layoutX="14.0" layoutY="6.0" prefHeight="17.0" prefWidth="41.0" text="login" />
+                                    <Label layoutX="14.0" layoutY="52.0" text="password" wrapText="true" />
+                                    <Button layoutX="74.0" layoutY="115.0" mnemonicParsing="false" onAction="#handleLogIn" text="Log in" />
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </Tab>
+                      <Tab text="Sign up">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <TextField fx:id="email" layoutX="14.0" layoutY="23.0" />
+                                    <TextField fx:id="loginNew" layoutX="14.0" layoutY="65.0" />
+                                    <PasswordField fx:id="passwordNew" layoutX="14.0" layoutY="107.0" />
+                                    <PasswordField fx:id="confirmPassword" layoutX="14.0" layoutY="150.0" />
+                                    <Label layoutX="20.0" layoutY="6.0" text="e-mail" />
+                                    <Label layoutX="21.0" layoutY="49.0" text="login" />
+                                    <Label layoutX="17.0" layoutY="89.0" text="password" />
+                                    <Label layoutX="19.0" layoutY="132.0" text="confirm password" />
+                                    <Button layoutX="74.0" layoutY="183.0" mnemonicParsing="false" onAction="#handleSignUp" text="Sign up" />
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </Tab>
+                    </tabs>
+                  </TabPane>
                </children>
             </AnchorPane>
-            <TabPane layoutX="220.0" layoutY="135.0" prefHeight="240.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
-              <tabs>
-                <Tab text="Log in">
-                  <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                           <children>
-                              <PasswordField fx:id="password" layoutX="14.0" layoutY="74.0" />
-                              <TextField fx:id="login" layoutX="14.0" layoutY="27.0" />
-                              <Label layoutX="14.0" layoutY="6.0" prefHeight="17.0" prefWidth="41.0" text="login" />
-                              <Label layoutX="14.0" layoutY="52.0" text="password" wrapText="true" />
-                              <Button layoutX="74.0" layoutY="115.0" mnemonicParsing="false" onAction="#handleLogIn" text="Log in" />
-                           </children>
-                        </AnchorPane>
-                  </content>
-                </Tab>
-                <Tab text="Sign up">
-                  <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                           <children>
-                              <TextField fx:id="email" layoutX="14.0" layoutY="23.0" />
-                              <TextField fx:id="loginNew" layoutX="14.0" layoutY="65.0" />
-                              <PasswordField fx:id="passwordNew" layoutX="14.0" layoutY="107.0" />
-                              <PasswordField fx:id="confirmPassword" layoutX="14.0" layoutY="150.0" />
-                              <Label layoutX="20.0" layoutY="6.0" text="e-mail" />
-                              <Label layoutX="21.0" layoutY="49.0" text="login" />
-                              <Label layoutX="17.0" layoutY="89.0" text="password" />
-                              <Label layoutX="19.0" layoutY="132.0" text="confirm password" />
-                              <Button layoutX="74.0" layoutY="183.0" mnemonicParsing="false" onAction="#handleSignUp" text="Sign up" />
-                           </children>
-                        </AnchorPane>
-                  </content>
-                </Tab>
-              </tabs>
-            </TabPane>
          </children>
       </Pane>
    </children>

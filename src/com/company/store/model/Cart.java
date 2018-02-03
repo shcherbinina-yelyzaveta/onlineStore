@@ -17,15 +17,6 @@ public class Cart {
         this.price = new SimpleDoubleProperty(0);
     }
 
-    public Cart(int id) {
-        this(cartDAO.findEntityById(id));
-    }
-
-    private Cart(Cart cart){
-        this.id = cart.getId();
-        this.price = cart.priceProperty();
-        this.products = cart.getProducts();
-    }
     public Cart(int id, List<Product> products, Double price) {
         this.id = id;
         this.products = products;

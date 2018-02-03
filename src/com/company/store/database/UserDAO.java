@@ -29,7 +29,7 @@ public class UserDAO extends AbstractDAO<Integer, User> {
                 String email = rs.getString("email");
                 String password = rs.getString("password");
                 int cart_id = rs.getInt("cart_id");
-                users.add(new User(id, login, email, password, new Cart(cart_id)));
+                users.add(new User(id, login, email, password, Cart.cartDAO.findEntityById(cart_id)));
             }
         } catch (SQLException e) {
             System.err.println("SQL Exception (request or table failed):" + e);
@@ -51,7 +51,7 @@ public class UserDAO extends AbstractDAO<Integer, User> {
                 String email = rs.getString("email");
                 String password = rs.getString("password");
                 int cart_id = rs.getInt("cart_id");
-                user = new User(id, login, email, password, new Cart(cart_id));
+                user = new User(id, login, email, password, Cart.cartDAO.findEntityById(cart_id));
             }
         } catch (SQLException e) {
             System.err.println("SQL Exception (request or table failed):" + e);

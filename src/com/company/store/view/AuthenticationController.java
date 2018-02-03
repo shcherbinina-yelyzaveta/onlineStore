@@ -1,6 +1,7 @@
 package com.company.store.view;
 
 import com.company.store.MainApp;
+import com.company.store.database.OrderDAO;
 import com.company.store.model.User;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -42,6 +43,8 @@ public class AuthenticationController {
         if (id != null) {
             user = User.userDAO.findEntityById(id);
             mainApp.setUser(user);
+            mainApp.setCartProducts(user.getCart().getProducts());
+            mainApp.initRootLayout();
             mainApp.showProductOverview();
         } else {
             errorView("Incorrect login or password");
@@ -90,7 +93,7 @@ public class AuthenticationController {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.initOwner(mainApp.getPrimaryStage());
         alert.setTitle("Invalid Fields");
-        alert.setHeaderText("Please correct invalid fields");
+        alert.setHeaderText(null);
         alert.setContentText(errorMessage);
         alert.showAndWait();
     }

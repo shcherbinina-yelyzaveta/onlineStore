@@ -58,6 +58,9 @@ public class RootLayoutController {
 
     @FXML
     private void handleAll() {
+        if(mainApp.isCart()){
+            mainApp.showProductOverview();
+        }
         mainApp.setProducts(Product.productDAO.findAll());
     }
 
@@ -68,10 +71,13 @@ public class RootLayoutController {
 
     @FXML
     private void handleCart(){
-        mainApp.setProducts(OrderDAO.findAllProductsByCartId(mainApp.getUser().getCart().getId()));
+        mainApp.showCartOverview();
     }
 
     private void viewCatalog(String name) {
+        if(mainApp.isCart()){
+            mainApp.showProductOverview();
+        }
         catalog_id = Category.categoryDAO.findIdByName(name);
         mainApp.setProducts(Product.productDAO.findAllByCatalogId(catalog_id));
     }
