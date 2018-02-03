@@ -41,6 +41,7 @@ public class AuthenticationController {
         Integer id = User.userDAO.authentication(login.getText(), password.getText());
         if (id != null) {
             user = User.userDAO.findEntityById(id);
+            mainApp.setUser(user);
             mainApp.showProductOverview();
         } else {
             errorView("Incorrect login or password");
