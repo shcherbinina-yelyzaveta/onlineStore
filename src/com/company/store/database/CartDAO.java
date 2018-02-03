@@ -14,7 +14,7 @@ public class CartDAO extends AbstractDAO<Integer, Cart> {
     private static final String SQL_INSERT_INTO_CART = "INSERT INTO cart(price) VALUES (0)";
     private static final String SQL_UPDATE = "UPDATE cart set price = (" +
             "SELECT sum(price) FROM product, orders" +
-            "WHERE product.id = prod_id AND cart_id = cart.id)";
+            "WHERE product.id = prod_id AND cart_id = ?) WHERE id = ?";
 
     @Override
     public List<Cart> findAll() {
@@ -99,8 +99,10 @@ public class CartDAO extends AbstractDAO<Integer, Cart> {
     public boolean update(Cart entity) {
         boolean result = false;
         try (Connection connection = ConnectorDB.getConnection();
-             Statement statement = connection.createStatement()) {
-            result = statement.execute(SQL_UPDATE);
+             PreparedStatement statement = connection.prepareStatement(SQL_UPDATE)) {
+            statement.setInt(1, entity.getId());
+            statement.setInt(2, entity.getId());
+            result = statement.execute();
         } catch (SQLException e) {
             System.err.println("SQL Exception (request or table failed):" + e);
         } catch (ClassNotFoundException e) {

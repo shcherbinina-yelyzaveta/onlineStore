@@ -12,7 +12,8 @@ public class UserDAO extends AbstractDAO<Integer, User> {
     private static final String SQL_SELECT_USER_ON_ID = "SELECT * FROM user WHERE id = ?";
     private static final String SQL_SELECT_ID_ON_USER = "SELECT id FROM user WHERE login = ? OR email = ?";
     private static final String SQL_DELETE_USER_ON_ID = "DELETE FROM user WHERE id = ?";
-    private static final String SQL_INSERT_INTO_USER = "INSERT INTO user(email, cart_id, login, password) VALUES (?, ?, ?, ?)";
+    private static final String SQL_INSERT_INTO_USER = "INSERT INTO user(email, cart_id, login, password)" +
+            " VALUES (?, ?, ?, ?)";
     private static final String SQL_UPDATE = "UPDATE user set password = ? WHERE id = ?";
     private static final String SQL_SELECT_ID = "SELECT id FROM user WHERE login = ? AND password = ?";
 

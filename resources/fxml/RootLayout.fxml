@@ -5,44 +5,35 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane minHeight="400" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane minHeight="400" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.company.store.view.RootLayoutController">
    <top>
       <MenuBar minWidth="600.0" prefWidth="600.0" BorderPane.alignment="CENTER">
         <menus>
-          <Menu mnemonicParsing="false" text="File">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Help">
-            <items>
-              <MenuItem mnemonicParsing="false" text="About" />
-            </items>
-          </Menu>
-            <Menu mnemonicParsing="false" text="Сategory">
+          <Menu mnemonicParsing="false" text="Сategory">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Other" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleOther" text="Other" />
                    <Menu mnemonicParsing="false" text="Food">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Fruits" />
-                        <MenuItem mnemonicParsing="false" text="Vegetables" />
-                        <MenuItem mnemonicParsing="false" text="Drinks" />
-                        <MenuItem mnemonicParsing="false" text="Sweets" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleFruits" text="Fruits" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleVegetables" text="Vegetables" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleDrinks" text="Drinks" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleSweets" text="Sweets" />
                     </items>
                    </Menu>
                    <Menu mnemonicParsing="false" text="Clothes">
                        <items>
-                           <MenuItem mnemonicParsing="false" text="Women's" />
-                           <MenuItem mnemonicParsing="false" text="Men's" />
-                           <MenuItem mnemonicParsing="false" text="Kid's" />
+                           <MenuItem mnemonicParsing="false" onAction="#handleWomen" text="Women's" />
+                           <MenuItem mnemonicParsing="false" onAction="#handleMen" text="Men's" />
+                           <MenuItem mnemonicParsing="false" onAction="#handleKids" text="Kid's" />
                        </items>
                    </Menu>
+                  <MenuItem mnemonicParsing="false" onAction="#handleAll" text="All" />
                </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Profile">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#handleCart" text="Cart" />
+              </items>
             </Menu>
         </menus>
       </MenuBar>

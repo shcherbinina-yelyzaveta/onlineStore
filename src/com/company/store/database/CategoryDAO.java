@@ -54,20 +54,7 @@ public class CategoryDAO extends AbstractDAO<Integer, Category> {
 
     @Override
     public Integer findIdByEntity(Category entity) {
-        Integer id = null;
-        try (Connection connection = ConnectorDB.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SQL_SELECT_ID_ON_CATEGORY)) {
-            statement.setString(1, entity.getCategoryName());
-            ResultSet rs = statement.executeQuery();
-            if (rs.next()) {
-                id = rs.getInt("id");
-            }
-        } catch (SQLException e) {
-            System.err.println("SQL Exception (request or table failed):" + e);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return id;
+        return findIdByName(entity.getCategoryName());
     }
 
     @Override
@@ -118,5 +105,22 @@ public class CategoryDAO extends AbstractDAO<Integer, Category> {
             e.printStackTrace();
         }
         return result;
+    }
+
+    public Integer findIdByName(String name){
+        Integer id = null;
+        try (Connection connection = ConnectorDB.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_SELECT_ID_ON_CATEGORY)) {
+            statement.setString(1, name);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                id = rs.getInt("id");
+            }
+        } catch (SQLException e) {
+            System.err.println("SQL Exception (request or table failed):" + e);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return id;
     }
 }

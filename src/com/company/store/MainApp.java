@@ -1,8 +1,11 @@
 package com.company.store;
 
 import com.company.store.model.Product;
+import com.company.store.model.User;
 import com.company.store.view.AuthenticationController;
+import com.company.store.view.CartViewController;
 import com.company.store.view.CatalogViewController;
+import com.company.store.view.RootLayoutController;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,18 +16,33 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.List;
 
 public class MainApp extends Application {
     private Stage primaryStage;
     private BorderPane rootLayout;
     private ObservableList<Product> products = FXCollections.observableArrayList();
+    private User user;
 
     public MainApp() {
-        products.addAll(Product.productDAO.findAll());
+        setProducts(Product.productDAO.findAll());
     }
 
     public ObservableList<Product> getProducts() {
         return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products.clear();
+        this.products.addAll(products);
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
@@ -49,6 +67,8 @@ public class MainApp extends Application {
             // Отображаем сцену, содержащую корневой макет.
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
+            RootLayoutController controller = loader.getController();
+            controller.setMainApp(this);
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -70,6 +90,24 @@ public class MainApp extends Application {
             rootLayout.setCenter(productOverview);
             // Даём контроллеру доступ к главному приложению.
             CatalogViewController controller = loader.getController();
+            controller.setMainApp(this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showCartOverview(){
+        try {
+            // Загружаем сведения об адресатах.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("/fxml/CartView.fxml"));
+            primaryStage.setResizable(true);
+            AnchorPane cartOverview = loader.load();
+
+            // Помещаем сведения об адресатах в центр корневого макета.
+            rootLayout.setCenter(cartOverview);
+            // Даём контроллеру доступ к главному приложению.
+            CartViewController controller = loader.getController();
             controller.setMainApp(this);
         } catch (IOException e) {
             e.printStackTrace();

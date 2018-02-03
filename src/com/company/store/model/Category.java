@@ -10,7 +10,7 @@ public class Category {
     public static CategoryDAO categoryDAO = new CategoryDAO();
 
     public Category() {
-        this("Other");
+        this("other");
     }
 
     public Category(String categoryName) {
@@ -23,14 +23,6 @@ public class Category {
         this.categoryName = new SimpleStringProperty(categoryName);
     }
 
-    public Category(int id) {
-        this(categoryDAO.findEntityById(id));
-    }
-
-    private Category(Category category){
-        this.id = category.getId();
-        this.categoryName = category.categoryNameProperty();
-    }
     public int getId() {
         return id;
     }

@@ -54,7 +54,7 @@
                   </GridPane>
                   <ButtonBar layoutX="203.0" layoutY="249.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
                      <buttons>
-                      <Button mnemonicParsing="false" prefWidth="84.0" text="Buy" />
+                      <Button mnemonicParsing="false" prefWidth="84.0" onAction="#handleBuy" text="Buy" />
                      </buttons></ButtonBar>
                </children></AnchorPane>
         </items>

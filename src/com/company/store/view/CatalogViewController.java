@@ -1,8 +1,11 @@
 package com.company.store.view;
 
 import com.company.store.MainApp;
+import com.company.store.database.OrderDAO;
+import com.company.store.model.Cart;
 import com.company.store.model.Product;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -58,6 +61,23 @@ public class CatalogViewController {
             catalogsLabel.setText("");
             descriptionLabel.setText("");
             valueLabel.setText("0 uan");
+        }
+    }
+
+    @FXML
+    private void handleBuy(){
+        int selectedIndex = productTable.getSelectionModel().getSelectedIndex();
+        if (selectedIndex >= 0) {
+            OrderDAO.create(mainApp.getUser().getCart().getId(), productTable.getItems().get(selectedIndex).getId());
+            Cart.cartDAO.update(mainApp.getUser().getCart());
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.initOwner(mainApp.getPrimaryStage());
+            alert.setTitle("No Selection");
+            alert.setHeaderText("No Product Selected");
+            alert.setContentText("Please select a product in the table.");
+
+            alert.showAndWait();
         }
     }
 }

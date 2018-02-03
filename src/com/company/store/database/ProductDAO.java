@@ -10,6 +10,7 @@ import java.util.List;
 public class ProductDAO extends AbstractDAO<Integer, Product> {
     private static final String SQL_SELECT_ALL_PRODUCTS = "SELECT * FROM product";
     private static final String SQL_SELECT_PRODUCT_ON_ID = "SELECT * FROM product WHERE id = ?";
+    private static final String SQL_SELECT_ALL_ON_CATALOG_ID = "SELECT * FROM product WHERE catalog_id = ?";
     private static final String SQL_SELECT_ID_ON_PRODUCT = "SELECT id FROM product WHERE name = ? AND price = ? AND " +
             "description = ? AND catalog_id = ?";
     private static final String SQL_DELETE_PRODUCT_ON_ID = "DELETE FROM product WHERE id = ?";
@@ -30,7 +31,7 @@ public class ProductDAO extends AbstractDAO<Integer, Product> {
                 Double price = rs.getDouble("price");
                 String description = rs.getString("description");
                 int catalog_id = rs.getInt("catalog_id");
-                products.add(new Product(id, name, new Category(catalog_id), price, description));
+                products.add(new Product(id, name, Category.categoryDAO.findEntityById(catalog_id), price, description));
             }
         } catch (SQLException e) {
             System.err.println("SQL Exception (request or table failed):" + e);
@@ -52,7 +53,7 @@ public class ProductDAO extends AbstractDAO<Integer, Product> {
                 Double price = rs.getDouble("price");
                 String description = rs.getString("description");
                 int catalog_id = rs.getInt("catalog_id");
-                product = new Product(id, name, new Category(catalog_id), price, description);
+                product = new Product(id, name, Category.categoryDAO.findEntityById(catalog_id), price, description);
             }
         } catch (SQLException e) {
             System.err.println("SQL Exception (request or table failed):" + e);
@@ -137,5 +138,26 @@ public class ProductDAO extends AbstractDAO<Integer, Product> {
             e.printStackTrace();
         }
         return result;
+    }
+
+    public List<Product> findAllByCatalogId (Integer catalog_id) {
+        List<Product> products = new ArrayList<>();
+        try (Connection connection = ConnectorDB.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_SELECT_ALL_ON_CATALOG_ID)) {
+            statement.setInt(1, catalog_id);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                Double price = rs.getDouble("price");
+                String description = rs.getString("description");
+                products.add(new Product(id, name, Category.categoryDAO.findEntityById(catalog_id), price, description));
+            }
+        } catch (SQLException e) {
+            System.err.println("SQL Exception (request or table failed):" + e);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return products;
     }
 }

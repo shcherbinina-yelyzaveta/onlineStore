@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.company.store.view.CartViewController">
+   <children>
+      <SplitPane dividerPositions="0.7562814070351759" focusTraversable="true" orientation="VERTICAL" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="600.0">
+               <children>
+                  <TableView prefHeight="298.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <columns>
+                      <TableColumn prefWidth="153.0" text="Name" />
+                      <TableColumn prefWidth="81.0" text="Price" />
+                        <TableColumn prefWidth="365.0" text="Description" />
+                    </columns>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
+                  </TableView>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="600.0">
+               <children>
+                  <Button layoutX="342.0" layoutY="33.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="83.0" text="Delete" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="103.0" />
+                  <Button layoutX="447.0" layoutY="33.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="83.0" text="Buy" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
+                  <Label layoutX="25.0" layoutY="14.0" prefHeight="27.0" prefWidth="83.0" text="Total Score" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="10">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="110.0" prefHeight="27.0" prefWidth="83.0" text="Label" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="110.0">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>
