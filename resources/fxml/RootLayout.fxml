@@ -33,6 +33,8 @@
             <Menu mnemonicParsing="false" text="Profile">
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#handleCart" text="Cart" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleChangePassword" text="Change password" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleSignOut" text="Sign out" />
               </items>
             </Menu>
         </menus>

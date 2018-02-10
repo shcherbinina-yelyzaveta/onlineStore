@@ -73,13 +73,8 @@ public class CatalogViewController {
             //todo: добавить табличку с количеством продукта в корзине
             Cart.cartDAO.update(mainApp.getUser().getCart());
         } else {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.initOwner(mainApp.getPrimaryStage());
-            alert.setTitle("No Selection");
-            alert.setHeaderText(null);
-            alert.setContentText("Please select a product in the table.");
-
-            alert.showAndWait();
-        }
+            mainApp.showAlert(Alert.AlertType.WARNING, "No Selection",
+                    "Please select a product in the table.");
+            }
     }
 }

@@ -47,7 +47,7 @@ public class AuthenticationController {
             mainApp.initRootLayout();
             mainApp.showProductOverview();
         } else {
-            errorView("Incorrect login or password");
+            mainApp.showAlert(Alert.AlertType.ERROR, "Invalid Fields", "Incorrect login or password");
         }
     }
 
@@ -55,13 +55,7 @@ public class AuthenticationController {
     private void handleSignUp() {
         if (isCorrect()) {
             user = new User(loginNew.getText(), email.getText(), passwordNew.getText());
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.initOwner(mainApp.getPrimaryStage());
-            alert.setTitle("Online Store");
-            alert.setHeaderText(null);
-            alert.setContentText("You are registered!\u2713\u2713\u2713");
-            alert.getDialogPane().setPrefWidth(250);
-            alert.showAndWait();
+            mainApp.showAlert(Alert.AlertType.INFORMATION, "Online Store", "You are registered!\u2713\u2713\u2713");
             mainApp.showAuthentication();
         }
     }
@@ -84,17 +78,8 @@ public class AuthenticationController {
         if (errorMessage.length() == 0) {
             return true;
         } else {
-            errorView(errorMessage);
+            mainApp.showAlert(Alert.AlertType.ERROR, "Invalid Fields", errorMessage);
             return false;
         }
-    }
-
-    private void errorView(String errorMessage) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.initOwner(mainApp.getPrimaryStage());
-        alert.setTitle("Invalid Fields");
-        alert.setHeaderText(null);
-        alert.setContentText(errorMessage);
-        alert.showAndWait();
     }
 }

@@ -49,14 +49,8 @@ public class CartViewController {
             productTable.getItems().remove(selectedIndex);
             totalPrice.setText(mainApp.getUser().getCart().getPrice() + " uan");
         } else {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.initOwner(mainApp.getPrimaryStage());
-            alert.setTitle("No Selection");
-            alert.setHeaderText(null);
-            alert.setContentText("Please select a product in the table.");
-
-            alert.showAndWait();
-        }
+            mainApp.showAlert(Alert.AlertType.WARNING, "No Selection", "Please select a product in the table.");
+            }
     }
 
     @FXML
@@ -65,14 +59,10 @@ public class CartViewController {
             productTable.getItems().clear();
             OrderDAO.delete(mainApp.getUser().getCart());
             totalPrice.setText("0 uan");
+            mainApp.showAlert(Alert.AlertType.INFORMATION, "Online Store",
+                    "Stay in touch! Our manager will contact you.");
         } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.initOwner(mainApp.getPrimaryStage());
-            alert.setTitle("Online Store");
-            alert.setHeaderText(null);
-            alert.setContentText("Cart is empty!");
-
-            alert.showAndWait();
+            mainApp.showAlert(Alert.AlertType.ERROR, "Online Store", "Cart is empty!");
         }
     }
 }

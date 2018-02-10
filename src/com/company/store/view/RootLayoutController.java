@@ -4,7 +4,13 @@ import com.company.store.MainApp;
 import com.company.store.database.OrderDAO;
 import com.company.store.model.Category;
 import com.company.store.model.Product;
+import com.company.store.model.User;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.TextInputDialog;
+
+import java.util.Optional;
 
 public class RootLayoutController {
     private MainApp mainApp;
@@ -72,6 +78,36 @@ public class RootLayoutController {
     @FXML
     private void handleCart(){
         mainApp.showCartOverview();
+    }
+
+    @FXML
+    private void handleSignOut(){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.initOwner(mainApp.getPrimaryStage());
+        alert.setTitle("Online Store");
+        alert.setHeaderText(null);
+        alert.setContentText("Are you sure?");
+        alert.getDialogPane().setPrefWidth(250);
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK){
+            mainApp.initAuthenticationLayout();
+            mainApp.setUser(null);
+            mainApp.showAuthentication();
+        }
+    }
+
+    @FXML
+    private void handleChangePassword(){
+        TextInputDialog dialog = new TextInputDialog(null);
+        dialog.setTitle("Online Store");
+        dialog.setHeaderText(null);
+        dialog.setContentText("Please enter your new password:");
+
+        Optional<String> result = dialog.showAndWait();
+        if (result.isPresent()){
+            mainApp.getUser().setPassword(result.get());
+            User.userDAO.update(mainApp.getUser());
+        }
     }
 
     private void viewCatalog(String name) {
